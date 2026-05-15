@@ -1,0 +1,65 @@
+# Configuration file for MamboMonitor
+
+GIF_TIME: 18
+# [Integer | Float]
+# How long each gif should play, in seconds
+
+# ============== RGB-Matrix settings ===============
+# ==================================================
+
+BRIGHTNESS: 60
+# [Integer: 0 ~ 100]
+# Set the display brightness
+
+GPIO_SLOWDOWN: 2
+# [Integer: 0 ~ 4]
+# Set this to the specific value that works for your setup.
+# Higher values are more suited for faster/more modern Raspberry Pi's.
+
+HAT_PWM_ENABLED: true
+# [true/false]
+# If you set the quality modification for the Adafruit RGB-Matrix hat, set to true. If not, set to false.
+
+LED_PWM_BITS: 8
+# [Integer: 2 ~ 11]
+# Lower decreases color depth but increases refresh rate. Adjust to taste. '8' works well in most cases.
+
+COLUMNS: 64
+# [Integer]
+# Width of each individual panel.
+
+ROWS: 32
+# [Integer]
+# Height of each individual panel.
+
+CANVAS_HEIGHT: 64
+# [Integer]
+# Overall height of the display. Equal to ROWS if only using 1 panel.
+
+CANVAS_WIDTH: 64
+# [Integer]
+# Overall width of the display. Equal to COLUMNS if only using 1 panel.
+
+# ========== Advanced RGB-Matrix settings ==========
+# ==================================================
+# Only enable the below settings if you know what you're doing!
+# Remove the leading '#' to enable the setting.
+# Refer to https://github.com/hzeller/rpi-rgb-led-matrix for valid values.
+# https://github.com/hzeller/rpi-rgb-led-matrix/blob/master/lib/README.md for layout configs
+
+# ADV_LED_PWM_LSB: 130
+ADV_LED_CHAIN_LENGTH: 2
+# ADV_LED_PARALLEL: 1
+ADV_LED_PIXEL_MAPPER_CONFIG: 'V-mapper:Z'
+# ADV_LED_HARDWARE_MAPPING: 'regular'
+# ADV_LED_ROW_ADDRESS_TYPE: 0
+# ADV_LED_MULTIPLEXING: 0
+# ADV_LED_SCAN_MODE: 0
+# ADV_LED_DISABLE_HARDWARE_PULSING: false
+# ADV_LED_INVERSE_COLORS: false
+# ADV_LED_RGB_SEQUENCE: 'RGB'
+# ADV_LED_PANEL_TYPE: ''
+# ADV_LED_LIMIT_REFRESH_RATE: 0
+# ADV_LED_LIMIT_REFRESH_RATE: 0
+# ADV_LED_DISABLE_BUSY_WAITING: false
+# ADV_LED_PWM_DITHER_BITS: 0
