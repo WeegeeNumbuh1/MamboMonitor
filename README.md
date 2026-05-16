@@ -44,7 +44,9 @@ Most of the code was adapted from my other project, [FlightGazer](https://github
 
 ### As Implemented
 
-<div align="center"><img src="media/MamboMonitor_irl.jpg" alt="lmao wtf" height="420">
+<div align="center">
+<img src="media/MamboMonitor_irl.jpg" alt="lmao wtf" height="420">
+<img src="media/MamboMonitor_Deployed.jpg" alt="lmao wtf (2)" height="420">
 </div>
 
 ### License
