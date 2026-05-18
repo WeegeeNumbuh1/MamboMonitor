@@ -55,7 +55,7 @@ Most of the code was adapted from my other project, [FlightGazer](https://github
 
 ### Prop Inspiration
 
-<a href="https://www.youtube.com/watch?v=FAh6X3JLf">
+<a href="https://www.youtube.com/watch?v=FAh6X3JLfMg">
 <img src="./media/mambo-crucified.gif" alt="Mambo">
 </a><br>
 
