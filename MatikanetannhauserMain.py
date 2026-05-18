@@ -41,7 +41,7 @@ import time
 START_TIME: float = time.monotonic()
 import datetime
 STARTED_DATE: datetime = datetime.datetime.now()
-VERSION: str = 'v.0.1.0 --- 2026-05-14'
+VERSION: str = 'v.0.1.1 --- 2026-05-18'
 import time
 import signal
 import argparse
@@ -53,12 +53,7 @@ import random
 from tools.gif_test_suite import gif_tester
 import asyncio
 
-if os.name == 'posix':
-    is_posix = True
-else:
-    is_posix = False
-
-if is_posix and os.geteuid() != 0:
+if os.name == 'posix' and os.geteuid() != 0:
     print("This script must be run with root permissions.")
     sys.exit(1)
 
@@ -371,13 +366,28 @@ def centerer(img_dim: int, canvas_dim: int) -> int:
         return 0
     return (canvas_dim - img_dim) // 2
 
+def has_transparency(img: Image.Image):
+    if img.info.get("transparency", None) is not None:
+        return True
+    if img.mode == "P":
+        transparent = img.info.get("transparency")
+        if transparent is not None:
+            for _, index in img.getcolors():
+                if index == transparent:
+                    return True
+    elif img.mode == "RGBA":
+        extrema = img.getextrema()
+        if extrema[3][0] < 255: # Check the min value of alpha
+            return True
+    return False
+
 # start the display
 canvas = matrix.CreateFrameCanvas()
 try:
     canvas.width = config['CANVAS_WIDTH']
     canvas.height = config['CANVAS_HEIGHT']
 except AttributeError:
-    pass # the above block works when using the emulator
+    pass # the above block only works when using the emulator
 main_logger.info(f"Matrix size: {matrix.width}x{matrix.height}, "
                   f"canvas size: {canvas.width}x{canvas.height}")
 # have something on screen while we wait for the other stuff to kick in
@@ -436,27 +446,38 @@ class GIFProcessor:
             self.gif_pool = set(gifs_paths)
             main_logger.info("Cycled through all gifs, going at it again")
 
+        preprocess_start = time.perf_counter()
         try:
             gif = Image.open(gif_path)
             num_frames = gif.n_frames
+            if has_transparency(gif):
+                flatten = True
+                flattened = Image.new("RGB", (gif.width, gif.height), (0,0,0))
+            else:
+                flatten = False
         except Exception:
             return
 
         # Preprocess the gifs frames into canvases to improve playback performance
-        main_logger.debug(f"Picked {gif_path} with {num_frames} frames")
+        main_logger.debug(f"Picked \'{gif_path}\' | {num_frames} frames | ({gif.width}x{gif.height}) | Alpha: {flatten}")
         frames = []
         durations = []
-        preprocess_start = time.perf_counter()
 
         # gif-specific stuff:
         # https://pillow.readthedocs.io/en/stable/handbook/image-file-formats.html#gif
         for frame_index in range(0, num_frames):
             gif.seek(frame_index)
-            durations.append(gif.info.get('duration', 40) / 1000) # grab each frame's duration
+            durations.append(gif.info.get('duration', 40) / 1000) # grab each frame's duration in sec
             # must copy the frame out of the gif, since thumbnail() modifies the image in-place
             frame = gif.copy()
-            frame.thumbnail((canvas.width, canvas.height), Image.LANCZOS)
-            frames.append(frame.convert("RGB"))
+            if flatten:
+                bg = flattened.copy()
+                bg.paste(frame, mask=frame.split()[3])
+                bg.thumbnail((canvas.width, canvas.height), Image.LANCZOS)
+                frames.append(bg.convert("RGB"))
+            else:
+                frame.thumbnail((canvas.width, canvas.height), Image.LANCZOS)
+                frames.append(frame.convert("RGB"))
         wid = frame.width
         hei = frame.height
 
@@ -474,7 +495,10 @@ class GIFProcessor:
         if gif_counter % 1000 == 0:
             main_logger.info(f"Played {gif_counter} gifs so far!")
 
-        main_logger.debug(f"Completed processing in {time.perf_counter() - preprocess_start:.3f} sec, displaying gif")
+        proc_time = time.perf_counter() - preprocess_start
+        gif_length = sum(durations)
+        main_logger.debug(f"Completed processing in {proc_time:.3f} sec (~{num_frames / proc_time:.3f} FPS), "
+                          f"displaying gif ({gif_length:.3f} sec duration, ~{GIF_TIME/gif_length:.1f} loops)")
         NEW_GIF = True
 
     def run_loop(self):

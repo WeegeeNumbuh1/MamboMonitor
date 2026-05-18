@@ -1,7 +1,7 @@
 #!/bin/bash
 # Install script for MamboMonitor
 # Repurposed from my other project, FlightGazer
-# Last edited: v.0.1.0
+# Last edited: v.0.1.1
 # by: WeegeeNumbuh1
 export DEBIAN_FRONTEND="noninteractive"
 STARTTIME=$(date '+%s')
@@ -33,7 +33,7 @@ servicefile_heredoc() {
 	[Service]
 	User=root
 	ExecStartPre=/bin/bash "${BASEDIR}/tools/splash_screen_manager.sh"
-	ExecStart=/usr/bin/python3 "${BASEDIR}/MatikanetannhauserMain.py" "${BASEDIR}/img_src
+	ExecStart=/usr/bin/python3 "${BASEDIR}/MatikanetannhauserMain.py" "${BASEDIR}/img_src"
 	Type=simple
 	OOMScoreAdjust=-500
 	Nice=-8

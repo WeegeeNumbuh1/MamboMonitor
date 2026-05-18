@@ -40,13 +40,25 @@ git clone --depth=1 https://github.com/WeegeeNumbuh1/MamboMonitor
 
 If you wish to uninstall, use the `uninstall.sh` script (coming soon).
 
+### Updating
+
+*to-do*
+
+### Changelog
+
+[`changelog.txt`](./changelog.txt)
+
 # Other stuff
 
-Most of the code was adapted from my other project, [FlightGazer](https://github.com/WeegeeNumbuh1/FlightGazer).
+Most of the code was adapted from my other project, [FlightGazer](https://github.com/WeegeeNumbuh1/FlightGazer).<br>
+**Questions?** Contact me or file an issue with this repo.
 
 ### Prop Inspiration
 
-[![mambo](https://media1.tenor.com/m/ToO69VHBRTsAAAAC/mambo-crucified.gif)](https://www.youtube.com/watch?v=FAh6X3JLfMg)<br>
+<a href="https://www.youtube.com/watch?v=FAh6X3JLf">
+<img src="./media/mambo-crucified.gif" alt="Mambo">
+</a><br>
+
 *(clicking the above gif will link to the video)*
 
 ### Featured Posts

@@ -1,0 +1,14 @@
+MamboMonitor Changelog
+v.V.R.U - Release date
+  | | |
+  | | `- Update
+  | `--- Release
+  `----- Version
+
+v.0.1.1 - 2026-05-18
+    - Added gif flattening for transparent gifs
+        - Eliminates perimeter jaggedness during the downsizing process
+
+v.0.1.0 - 2026-05-14
+    - Initial Release
+    - Validated to work for an entire convention weekend
