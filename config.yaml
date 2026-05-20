@@ -8,7 +8,7 @@ GIF_TIME: 18
 # ============== RGB-Matrix settings ===============
 # ==================================================
 
-BRIGHTNESS: 60
+BRIGHTNESS: 70
 # [Integer: 0 ~ 100]
 # Set the display brightness
 
@@ -34,12 +34,12 @@ ROWS: 32
 # Height of each individual panel.
 
 CANVAS_HEIGHT: 64
-# [Integer]
+# [Integer or null]
 # Overall height of the display. Equal to ROWS if only using 1 panel.
 # Only applies to the Emulator
 
 CANVAS_WIDTH: 64
-# [Integer]
+# [Integer or null]
 # Overall width of the display. Equal to COLUMNS if only using 1 panel.
 # Only applies to the Emulator
 

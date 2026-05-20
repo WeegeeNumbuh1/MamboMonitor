@@ -41,7 +41,7 @@ import time
 START_TIME: float = time.monotonic()
 import datetime
 STARTED_DATE: datetime = datetime.datetime.now()
-VERSION: str = 'v.0.1.1 --- 2026-05-18'
+VERSION: str = 'v.0.2.0 --- 2026-05-20'
 import time
 import signal
 import argparse
@@ -67,12 +67,6 @@ args_main.add_argument(
     default=f"{Path(CURRENT_DIR, 'img_src')}"
 )
 args_main.add_argument(
-    "time",
-    nargs='?',
-    help="(Optional) How long each gif should play, in seconds.",
-    default=30
-)
-args_main.add_argument(
     '-e', '--emulate',
     action='store_true',
     help="Use the emulator (if installed) instead of rgbmatrix."
@@ -96,14 +90,14 @@ if args_init.verbose:
     VERBOSE_MODE: bool = True
 else:
     VERBOSE_MODE = False
-GIF_TIME: float|int = float(args_init.time)
+GIF_TIME: float|int|None = None
 
 if len(sys.argv) < 2:
     print("No directory provided.")
     sys.exit(1)
 
 if not (gif_dir := Path(args_init.sources)).is_dir():
-    print("Provided path is not a directory.")
+    print(f"Provided path \'{gif_dir.absolute()}\' is not a directory.")
     sys.exit(1)
 
 # logging setup taken from FlightGazer
@@ -150,7 +144,7 @@ main_logger.info("===                Welcome to MamboMonitor!                ===
 main_logger.info("==============================================================")
 main_logger.info(f"Version: {VERSION}")
 main_logger.info(f"Script started: {STARTED_DATE}")
-main_logger.info(f"Looking in \'{gif_dir.absolute()}\' and a {GIF_TIME} second gif interval.")
+main_logger.info(f"Looking in \'{gif_dir.absolute()}\'")
 
 if os.name != 'nt':
     try:
@@ -227,8 +221,8 @@ config_default = {
     'LED_PWM_BITS': 8,
     'COLUMNS': 64,
     'ROWS': 32,
-    'CANVAS_HEIGHT': 32,
-    'CANVAS_WIDTH': 64,
+    'CANVAS_HEIGHT': None,
+    'CANVAS_WIDTH': None,
     'BRIGHTNESS': 75
 }
 # Advanced options for LED Matrix setups that don't use the Adafruit Bonnet
@@ -275,10 +269,7 @@ if (CONFIG_FILE := Path(CURRENT_DIR, 'config.yaml')).exists() and can_load_confi
 
     if config:
         for key in config_default:
-            if (key not in config
-                or type(config[key]) != type(config_default[key])
-                or config[key] is None
-            ):
+            if key not in config or config[key] is None:
                 config[key] = config_default[key]
         for advanced_key in advanced_LED_settings:
             try:
@@ -350,8 +341,12 @@ for attr in valid_attr:
 matrix = RGBMatrix(options=options)
 loaded_font = graphics.Font()
 loaded_font.LoadFont(f"{CURRENT_DIR}/fonts/3x3.bdf")
+if not GIF_TIME:
+    GIF_TIME = 30
+if GIF_TIME < 5:
+    GIF_TIME = 5
 main_logger.info(f"Using brightness of {config['BRIGHTNESS']}")
-main_logger.info(f"Playing each gif for {config['GIF_TIME']} seconds")
+main_logger.info(f"Playing each gif for at least {config['GIF_TIME']} seconds")
 # ======= END SETUP SECTION =======
 # =================================
 
@@ -384,12 +379,16 @@ def has_transparency(img: Image.Image):
 # start the display
 canvas = matrix.CreateFrameCanvas()
 try:
-    canvas.width = config['CANVAS_WIDTH']
-    canvas.height = config['CANVAS_HEIGHT']
+    if config['CANVAS_WIDTH'] and config['CANVAS_HEIGHT']:
+        canvas.width = config['CANVAS_WIDTH']
+        canvas.height = config['CANVAS_HEIGHT']
+        main_logger.info("Note: Canvas dimensions have been overridden")
 except AttributeError:
     pass # the above block only works when using the emulator
-main_logger.info(f"Matrix size: {matrix.width}x{matrix.height}, "
-                  f"canvas size: {canvas.width}x{canvas.height}")
+main_logger.info(
+    f"Matrix size: {matrix.width}x{matrix.height}, "
+    f"canvas size: {canvas.width}x{canvas.height}"
+)
 # have something on screen while we wait for the other stuff to kick in
 try:
     main_logger.debug(f"Using splash screen: {MAMBO_SPLASH}")
@@ -478,28 +477,37 @@ class GIFProcessor:
             else:
                 frame.thumbnail((canvas.width, canvas.height), Image.LANCZOS)
                 frames.append(frame.convert("RGB"))
-        wid = frame.width
-        hei = frame.height
+        if flatten:
+            wid = bg.width
+            hei = bg.height
+        else:
+            wid = frame.width
+            hei = frame.height
 
         # Close the gif file to save memory now that we have copied out all of the frames
         gif.close()
+        # set minimum frame time for 1 frame gifs
+        if len(durations) == 1:
+            durations[0] = 0.1
         with frames_lock:
             global_frames = frames
             global_durations = durations
             global_num_frames = num_frames
             global_img_width = wid
             global_img_height = hei
-        with warmup_done:
-            warmup_done.notify()
         gif_counter += 1
-        if gif_counter % 1000 == 0:
+        if gif_counter % 100 == 0:
             main_logger.info(f"Played {gif_counter} gifs so far!")
 
         proc_time = time.perf_counter() - preprocess_start
         gif_length = sum(durations)
-        main_logger.debug(f"Completed processing in {proc_time:.3f} sec (~{num_frames / proc_time:.3f} FPS), "
-                          f"displaying gif ({gif_length:.3f} sec duration, ~{GIF_TIME/gif_length:.1f} loops)")
+        main_logger.debug(
+            f"Completed processing in {proc_time:.3f} sec (~{num_frames / proc_time:.3f} FPS), "
+            f"displaying gif ({gif_length:.3f} sec duration, ~{GIF_TIME/gif_length:.1f} loops, "
+            f"resized: {wid}x{hei})")
         NEW_GIF = True
+        with warmup_done:
+            warmup_done.notify_all()
 
     def run_loop(self):
         def keep_alive():
@@ -541,6 +549,8 @@ def gif_switcher() -> None:
     while True:
         dispatcher.send(message='', signal=SWITCH_GIF, sender=gif_switcher)
         if warmup_inc > 0:
+            with warmup_done:
+                warmup_done.wait_for(lambda: NEW_GIF, GIF_TIME / 2)
             time.sleep(GIF_TIME)
         else:
             time.sleep(5)
@@ -571,10 +581,12 @@ try:
     # infinitely loop through the gif until the timer from `gif_switcher()` expires.
     # jank implementation, but works
     # TODO: offload this to a separate process because you can see when
-    # the gif processing happens in the other thread (causes flickering of the display)
+    # the gif processing happens in the other thread
+    # (causes flickering of the display, unless a realtime kernel is used)
     cur_frame = 0
     gl = 0
     while True:
+        adj = time.perf_counter()
         gl_last = gl
         with frames_lock:
             gl = global_num_frames
@@ -590,7 +602,7 @@ try:
             centerer(global_img_height, canvas.height)
         )
         matrix.SwapOnVSync(canvas)
-        if cur_frame == gl - 1:
+        if cur_frame >= gl - 1:
             cur_frame = 0
         else:
             cur_frame += 1
@@ -600,7 +612,13 @@ try:
             except IndexError: # restart the gif as a failsafe
                 duration = 0.05
                 cur_frame = 0
-        time.sleep(duration)
+        rest = duration - (time.perf_counter() - adj)
+        if 0 < rest < 1:
+            time.sleep(rest)
+        elif rest >= 1:
+            time.sleep(1)
+        else:
+            time.sleep(duration)
 
 except KeyboardInterrupt:
     sys.exit(0)

@@ -19,13 +19,14 @@ Built for Anime Central 2026.
 > This setup can be used for other kinds of gif collections. This just happens to be Umamusume themed.
 
 > [!IMPORTANT]
-> Most of this code was rushed, but works. Expect more refinements/cleanups at some point if I ever get around to it.<br>
-> (No LLMs were involved in this project.)
+> Most of this code was rushed, but works (it's still in the v.0 stage).<br>
+> Expect more refinements/cleanups at some point (if I ever get around to it).<br>
+> (Note: No LLMs were involved in this project.)
 
 # How to use
 
 This project assumes you're familiar with [rgbmatrix displays](https://github.com/hzeller/rpi-rgb-led-matrix) and have a Raspberry Pi on hand.<br>
-These scripts are not designed for any other setups (Arduino, ESP32, etc.)
+These scripts are not designed for any other setups (Arduino, ESP32, RP2040, etc.)
 
 - Clone this repo:
 ```
@@ -35,10 +36,15 @@ git clone --depth=1 https://github.com/WeegeeNumbuh1/MamboMonitor
 - Run the install script [`install.sh`](/install.sh) to install the required python packages and install the service.
 - Run [`main_downloader.py`](./tools/main_downloader.py) in [`tools`](/tools/) to download Umamusume gifs from Tenor if you don't have any already.
 - Edit [`config.yaml`](/config.yaml) to match your existing rgbmatrix setup.
-  - The defaults are based on my personal config (2x 64x32 displays in [V-Mapper:Z orientation](https://github.com/hzeller/rpi-rgb-led-matrix/blob/master/lib/README.md))
-- Run the main script, [`MatikanetannhauserMain.py`](./MatikanetannhauserMain.py)
+  - The defaults are based on my personal config (2x 64x32 displays in [V-Mapper:Z orientation](https://github.com/hzeller/rpi-rgb-led-matrix/blob/master/lib/README.md#v-mapper-and-vmapperz-vertical-arrangement))
+- Run the main script, [`MatikanetannhauserMain.py`](./MatikanetannhauserMain.py):
+```bash
+python MatikanetannhauserMain.py img_src
+# or, provide a path to your desired gif collection
+# e.g. python MatikanetannhauserMain.py /username/memes
+```
 
-If you wish to uninstall, use the `uninstall.sh` script (coming soon).
+If you wish to uninstall, use the `uninstall.sh` script (coming soon™).
 
 ### Updating
 
@@ -65,6 +71,7 @@ Most of the code was adapted from my other project, [FlightGazer](https://github
 
 - [Twitter](https://x.com/juliusqueezer/status/2055338447276032273?s=19)
 - [UmaMusume subreddit](https://old.reddit.com/r/UmaMusume/comments/1teqb29/mambo_getting_made_in_heaven_meme/)
+- [3D model \& make](https://cults3d.com/en/3d-printing/mambo-crucified)
 
 ### As Implemented
 

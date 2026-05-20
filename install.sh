@@ -1,7 +1,7 @@
 #!/bin/bash
 # Install script for MamboMonitor
 # Repurposed from my other project, FlightGazer
-# Last edited: v.0.1.1
+# Last edited: v.0.2.0
 # by: WeegeeNumbuh1
 export DEBIAN_FRONTEND="noninteractive"
 STARTTIME=$(date '+%s')
@@ -83,10 +83,9 @@ echo "in the 'tools' directory."
 sleep 5s
 
 echo -e "\n${GREEN}>>> Installing Python packages...${NC}"
-# no venv? (skill issue)
-# using a venv will come later
-apt-get install pip -y
-# pip3 install --upgrade requests --break-system-packages
+# no venv or requirements.txt? (skill issue)
+# using a venv will come later (maybe)
+apt-get install pip python3-requests -y
 pip3 install --upgrade pydispatcher --break-system-packages
 pip3 install --upgrade ruamel.yaml --break-system-packages
 pip3 install --upgrade beautifulsoup4 --break-system-packages

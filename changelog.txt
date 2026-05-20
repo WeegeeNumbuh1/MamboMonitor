@@ -5,9 +5,17 @@ v.V.R.U - Release date
   | `--- Release
   `----- Version
 
+v.0.2.0 - 2026-05-20
+  - Fix git tracking for missing module dependency
+  - Improved gif frame duration consistency
+  - More consistent gif display duration to account for processing time
+  - Make canvas dimension override optional
+  - GIF display time is now controlled only by the config file
+  - Fix positioning for flattened transparent gifs
+
 v.0.1.1 - 2026-05-18
-    - Added gif flattening for transparent gifs
-        - Eliminates perimeter jaggedness during the downsizing process
+  - Added gif flattening for transparent gifs
+    - Eliminates perimeter jaggedness during the downsizing process
 
 v.0.1.0 - 2026-05-14
     - Initial Release
