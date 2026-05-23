@@ -38,9 +38,9 @@ if url_count == 0:
     print("No lines read, nothing to do. Exiting...")
     sys.exit(0)
 
-main_threadpool = ThreadPoolExecutor(max_workers=10)
-results_list = []
 batchsize = 10
+main_threadpool = ThreadPoolExecutor(max_workers=batchsize)
+results_list = []
 print("Starting in 10 seconds.")
 print("Press Ctrl+C to stop/abort.")
 sleep(10)

@@ -582,7 +582,7 @@ try:
     # jank implementation, but works
     # TODO: offload this to a separate process because you can see when
     # the gif processing happens in the other thread
-    # (causes flickering of the display, unless a realtime kernel is used)
+    # (causes flickering on a real display, unless a realtime/more optimized kernel is used)
     cur_frame = 0
     gl = 0
     while True:

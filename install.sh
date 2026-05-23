@@ -22,6 +22,11 @@ if [ `id -u` -ne 0 ]; then
 	sleep 1s
 	exit 1
 fi
+if ! command -v apt >/dev/null 2>&1; then
+	echo -e "${NC}${RED}>>> ERROR: Setup cannot continue. This system does not use apt.${NC}"
+	sleep 2s
+	exit 1
+fi
 
 servicefile_heredoc() {
 	cat <<- EOF > /etc/systemd/system/mambomonitor.service

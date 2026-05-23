@@ -5,13 +5,14 @@
     <img src="mambo.jpg" alt="Matikanetannhauser" height="240">
     </a>
     <h1 align="center">MamboMonitor</h1>
-    Umamusume gif player for rgbmatrix displays.
+    Umamusume gif player for rgbmatrix displays. (<i>+ Tenor gif downloader!</i>)
 </div>
 <!-- end title section -->
 
 # What this is
 
-A gif viewer that selects a random gif to play from a folder of gifs, renders it to an rgbmatrix display, and continues selecting random gifs until all are played, then starts all over again. Designed to run without a network connection.
+A gif viewer that selects a random gif to play from a folder of gifs, renders it to an rgbmatrix display, and continues selecting random gifs until all are played, then starts all over again. Designed to run without a network connection.<br>
+Also includes a Tenor gif downloader designed to grab uma gifs for this project.
 
 Built for Anime Central 2026.
 
@@ -26,14 +27,18 @@ Built for Anime Central 2026.
 # How to use
 
 This project assumes you're familiar with [rgbmatrix displays](https://github.com/hzeller/rpi-rgb-led-matrix) and have a Raspberry Pi on hand.<br>
-These scripts are not designed for any other setups (Arduino, ESP32, RP2040, etc.)
+These scripts are not designed for any other setups (Arduino, ESP32, RP2040, etc.)<br>
+For linux systems, this project assumes Debian. (`systemd` + `apt` + `bash`)
+
+*Note: You can also run this without a Raspberry Pi and on a normal computer, [see below](#running-on-a-normal-computer).*
 
 - Clone this repo:
-```
+```bash
 git clone --depth=1 https://github.com/WeegeeNumbuh1/MamboMonitor
+cd MamboMonitor
 ```
 - Add URLs to [`links.txt`](/links.txt).
-- Run the install script [`install.sh`](/install.sh) to install the required python packages and install the service.
+- Run the install script [`install.sh`](/install.sh) to install the required python packages and install the startup service.
 - Run [`main_downloader.py`](./tools/main_downloader.py) in [`tools`](/tools/) to download Umamusume gifs from Tenor if you don't have any already.
 - Edit [`config.yaml`](/config.yaml) to match your existing rgbmatrix setup.
   - The defaults are based on my personal config (2x 64x32 displays in [V-Mapper:Z orientation](https://github.com/hzeller/rpi-rgb-led-matrix/blob/master/lib/README.md#v-mapper-and-vmapperz-vertical-arrangement))
@@ -49,6 +54,16 @@ If you wish to uninstall, use the `uninstall.sh` script (coming soon™).
 ### Updating
 
 *to-do*
+
+### Running on a normal computer
+
+<details><summary>Expand/Collapse</summary>
+
+All of this repo was coded in VSCode on Windows before actually using real hardware, so if it can run there, you can run it on your setup as well.
+
+Simply take a peek at the python packages required in the setup script [`install.sh`](/install.sh), install them on your setup, and everything should run as expected. (The rest is left as an exercise for the reader).
+
+</details>
 
 ### Changelog
 

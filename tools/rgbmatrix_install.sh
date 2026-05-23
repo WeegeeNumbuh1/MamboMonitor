@@ -157,7 +157,7 @@ if [ $? -ne 0 ]; then
 	rm -rf "$RGB_MATRIX_DIR" 2>&1 >/dev/null
 	curl -L $GITUSER/$REPO/archive/$COMMIT.zip -o /tmp/$REPO-$COMMIT.zip\
 	&& unzip -q /tmp/$REPO-$COMMIT.zip\
-	&& rm /tmp/$REPO-$COMMIT.zip && mv /tmp/$REPO-$COMMIT "$RGB_MATRIX_DIR" >/dev/null 2>&1
+	&& rm /tmp/$REPO-$COMMIT.zip && mv -f /tmp/$REPO-$COMMIT "$RGB_MATRIX_DIR" >/dev/null 2>&1
 	if [ $? -ne 0 ]; then
 		echo -e "${RED}>>> ERROR: Failed to download from GitHub. Cannot continue.${NC}"
 		echo "Undoing changes..."
