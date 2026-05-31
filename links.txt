@@ -2,7 +2,7 @@
 # start a line with '#' to make a comment
 # Note: You must provide the Tenor page for the gif like as used in this file
 # There is no support for any other webpage/website.
-# dated: 2026-05-14
+# dated: 2026-05-31
 https://tenor.com/view/mambo-matikanetannhauser-machitan-tannhauser-machikane-gif-18249044314306558353
 https://tenor.com/view/matikanetannhauser-matikane-tannhauser-tannhoiza-machitan-gif-3584597184245686209
 https://tenor.com/view/matikanetannhauser-tanuki-mambo-umamusume-uma-musume-gif-8725529668921553835
@@ -247,6 +247,7 @@ https://tenor.com/view/uma-musume-agnes-tachyon-question-marks-gif-6787314496782
 https://tenor.com/view/uma-musume-agnes-tachyon-agnes-truth-nuke-gif-12839840168819495298
 https://tenor.com/view/el-condor-pasa-poor-broke-umamusume-uma-musume-gif-6359708500114064277
 https://tenor.com/view/el-condor-pasa-uma-musume-dance-horse-girl-anime-gif-5685119691744471778
+https://tenor.com/view/umamusume-el-condor-pasa-silly-dance-gif-12639057622989212826
 https://tenor.com/view/uma-musume-gif-16240128103335736957
 https://tenor.com/view/umamusume-special-week-pretty-derby-horses-dont-stop-they-keep-going-uma-musume-gif-15031886570678928594
 https://tenor.com/view/uma-musume-meep-low-cortisol-dance-chibi-gif-17107758709618840273
@@ -486,3 +487,5 @@ https://tenor.com/view/oguri-cap-umamusume-uma-musume-tamamo-cross-gif-154553760
 https://tenor.com/view/tamamo-cross-uma-musume-cinderella-gray-uma-musume-anime-shock-anime-surprise-gif-15079374149370251598
 https://tenor.com/view/uma-musume-tamamo-cross-gif-16615579396360926091
 https://tenor.com/view/tsurumaru-tsuyoshi-tsuyoshi-uma-musume-umamusume-anime-gif-5859856330608068169
+https://tenor.com/view/manhattan-cafe-cafe-umamusume-uma-musume-umamusume-pretty-derby-gif-17232424643711228739
+https://tenor.com/view/cafe-manhattan-cafe-uma-umamusume-fish-gif-14960122862341011468

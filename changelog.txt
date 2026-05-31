@@ -5,6 +5,10 @@ v.V.R.U - Release date
   | `--- Release
   `----- Version
 
+v.0.2.1 - 2026-05-31
+  - Depreciate and remove custom canvas sizing feature
+    - RGBMatrixEmulator v0.17.0 and newer handles correct sizing with mappers
+
 v.0.2.0 - 2026-05-20
   - Fix git tracking for missing module dependency
   - Improved gif frame duration consistency

@@ -3,6 +3,7 @@
 # Installs the latest version of the rgbmatrix library
 # and makes it available as a system-wide Python module.
 # This will only build on a Raspberry Pi!
+# Updated: May 2026
 # By: WeegeeNumbuh1
 
 GREEN='\033[0;32m'

@@ -33,16 +33,6 @@ ROWS: 32
 # [Integer]
 # Height of each individual panel.
 
-CANVAS_HEIGHT: 64
-# [Integer or null]
-# Overall height of the display. Equal to ROWS if only using 1 panel.
-# Only applies to the Emulator
-
-CANVAS_WIDTH: 64
-# [Integer or null]
-# Overall width of the display. Equal to COLUMNS if only using 1 panel.
-# Only applies to the Emulator
-
 # ========== Advanced RGB-Matrix settings ==========
 # ==================================================
 # Only enable the below settings if you know what you're doing!

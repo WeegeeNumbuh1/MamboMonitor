@@ -41,7 +41,7 @@ import time
 START_TIME: float = time.monotonic()
 import datetime
 STARTED_DATE: datetime = datetime.datetime.now()
-VERSION: str = 'v.0.2.0 --- 2026-05-20'
+VERSION: str = 'v.0.2.1 --- 2026-05-31'
 import time
 import signal
 import argparse
@@ -221,8 +221,6 @@ config_default = {
     'LED_PWM_BITS': 8,
     'COLUMNS': 64,
     'ROWS': 32,
-    'CANVAS_HEIGHT': None,
-    'CANVAS_WIDTH': None,
     'BRIGHTNESS': 75
 }
 # Advanced options for LED Matrix setups that don't use the Adafruit Bonnet
@@ -378,13 +376,6 @@ def has_transparency(img: Image.Image):
 
 # start the display
 canvas = matrix.CreateFrameCanvas()
-try:
-    if config['CANVAS_WIDTH'] and config['CANVAS_HEIGHT']:
-        canvas.width = config['CANVAS_WIDTH']
-        canvas.height = config['CANVAS_HEIGHT']
-        main_logger.info("Note: Canvas dimensions have been overridden")
-except AttributeError:
-    pass # the above block only works when using the emulator
 main_logger.info(
     f"Matrix size: {matrix.width}x{matrix.height}, "
     f"canvas size: {canvas.width}x{canvas.height}"

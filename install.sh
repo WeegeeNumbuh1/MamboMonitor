@@ -94,6 +94,8 @@ apt-get install pip python3-requests -y
 pip3 install --upgrade pydispatcher --break-system-packages
 pip3 install --upgrade ruamel.yaml --break-system-packages
 pip3 install --upgrade beautifulsoup4 --break-system-packages
+# note: it seems like fake-useragent is no longer getting updates (repo got archived Jan 2026)
+# hopefully there's something that can be used as a replacement eventually
 pip3 install --upgrade fake-useragent --break-system-packages
 pip3 install --upgrade RGBMatrixEmulator --break-system-packages
 
