@@ -5,6 +5,12 @@ v.V.R.U - Release date
   | `--- Release
   `----- Version
 
+v.0.2.2 - 2026-06-17
+  - Add improved support for running on a Raspberry Pi 5
+    - Requires latest version of rgbmatrix as of this Update
+  - Updated rgbmatrix install script
+  - Splash screen uses updated techniques used by FlightGazer v.11.3.0
+
 v.0.2.1 - 2026-05-31
   - Depreciate and remove custom canvas sizing feature
     - RGBMatrixEmulator v0.17.0 and newer handles correct sizing with mappers

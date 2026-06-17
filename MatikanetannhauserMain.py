@@ -41,7 +41,7 @@ import time
 START_TIME: float = time.monotonic()
 import datetime
 STARTED_DATE: datetime = datetime.datetime.now()
-VERSION: str = 'v.0.2.1 --- 2026-05-31'
+VERSION: str = 'v.0.2.2 --- 2026-06-17'
 import time
 import signal
 import argparse
@@ -325,6 +325,7 @@ attribute_assignment = {
     'limit_refresh_rate_hz': ADV_LED_LIMIT_REFRESH_RATE,
     'disable_busy_waiting': ADV_LED_DISABLE_BUSY_WAITING,
     'pwm_dither_bits': ADV_LED_PWM_DITHER_BITS,
+    'rp1_pio': 1, # offload processing to the RP1 on an RPi5 for nearly 0 CPU use
     'drop_privileges': False,
     'emulator_title': f"MamboMonitor - Emulated", # for RGBMatrixEmulator >=v0.13.5
 }

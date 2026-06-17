@@ -88,6 +88,14 @@ Most of the code was adapted from my other project, [FlightGazer](https://github
 - [UmaMusume subreddit](https://old.reddit.com/r/UmaMusume/comments/1teqb29/mambo_getting_made_in_heaven_meme/)
 - [3D model \& make](https://cults3d.com/en/3d-printing/mambo-crucified)
 
+### Fanart
+
+<a href="https://x.com/chigyudoomer/status/2066871410178572506">
+<img src="./media/CrucifiedMambo_by_chigyudoomer.jpg" alt="Fanart source" height="420">
+</a><br>
+
+*(art by `@chigyudoomer` on Twitter)*
+
 ### As Implemented
 
 <div align="center">

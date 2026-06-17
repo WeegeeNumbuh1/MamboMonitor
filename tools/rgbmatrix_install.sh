@@ -120,10 +120,11 @@ grep --line-regexp --fixed-strings \
 	-e python3-setuptools \
 	-e python3-pip \
 	-e python3-venv \
-	-e python3-pillow \
 	-e python3-pil \
 	-e python3-tk \
 	-e cython3 \
+	-e zip \
+	-e unzip \
 	| xargs apt-get install -y
 echo -e "${NC}> Dependency install complete.${FADE}"
 
@@ -152,8 +153,28 @@ STAGEA=$(cat /proc/uptime | awk '{print $1}')
 echo -e "\n${GREEN}>>> Installing python library..."
 echo -e "${ORANGE}(This will take a few minutes)\n${NC}${FADE}"
 cd "$RGB_MATRIX_DIR"
-pip install . --break-system-packages
-if [ $? -ne 0 ]; then
+for i in {1..2}; do
+	pip install . --break-system-packages
+	INSTALL_CODE=$?
+	if [ $INSTALL_CODE -eq 0 ]; then
+		break
+	else
+		if [ $i -eq 1 ]; then 
+			echo -e "\n${ORANGE}>>> Installation failed. Trying one more time...${NC}${FADE}"
+		fi
+	fi 
+done
+if [ $INSTALL_CODE -ne 0 ]; then
+	if [ "$PI5" = true ]; then # only modern rgbmatrix builds can run on RPi5, don't use the older ones
+		echo -e "\n${ORANGE}>>> Installation failed. Cannot continue.${NC}"
+		echo "Undoing changes..."
+		rm -rf "$RGB_MATRIX_DIR" 2>&1 >/dev/null
+		if [ -d "${USER_HOME}/rpi-rgb-led-matrix_old" ]; then
+			mv "${USER_HOME}/rpi-rgb-led-matrix_old" "$RGB_MATRIX_DIR"
+		fi
+		echo "Done. Try running this script at a later time."
+		exit 1
+	fi
 	echo -e "\n${ORANGE}>>> Installation failed, trying an older version of rgbmatrix...${NC}"
 	rm -rf "$RGB_MATRIX_DIR" 2>&1 >/dev/null
 	curl -L $GITUSER/$REPO/archive/$COMMIT.zip -o /tmp/$REPO-$COMMIT.zip\
@@ -221,8 +242,7 @@ TOTALTIME=$(awk "BEGIN {print $DONETIME - $STARTMONOTONIC}")
 echo -e "${GREEN}>>> RGB-Matrix successfully installed!${NC}"
 echo -e "${NC}> Total install time took ${TOTALTIME} seconds."
 if [ $RGBMATRIX_PRESENT -ne 0 ]; then
-	echo "You might need to reboot your system to use the"
-	echo "rgbmatrix library."
+	echo "You might need to reboot your system to use the rgbmatrix library."
 fi
 echo "rgbmatrix install script exiting...."
 exit 0
