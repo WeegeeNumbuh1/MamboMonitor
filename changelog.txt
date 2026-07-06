@@ -5,6 +5,10 @@ v.V.R.U - Release date
   | `--- Release
   `----- Version
 
+v.0.2.3 - 2026-07-06
+  - Swapped 'fake-useragent' python module with its modern
+    replacement 'forge-useragent'
+
 v.0.2.2 - 2026-06-17
   - Add improved support for running on a Raspberry Pi 5
     - Requires latest version of rgbmatrix as of this Update

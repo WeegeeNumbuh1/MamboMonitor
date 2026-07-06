@@ -41,7 +41,7 @@ import time
 START_TIME: float = time.monotonic()
 import datetime
 STARTED_DATE: datetime = datetime.datetime.now()
-VERSION: str = 'v.0.2.2 --- 2026-06-17'
+VERSION: str = 'v.0.2.3 --- 2026-07-06'
 import time
 import signal
 import argparse

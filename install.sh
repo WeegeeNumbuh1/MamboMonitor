@@ -1,7 +1,7 @@
 #!/bin/bash
 # Install script for MamboMonitor
 # Repurposed from my other project, FlightGazer
-# Last edited: v.0.2.0
+# Last edited: v.0.2.3
 # by: WeegeeNumbuh1
 export DEBIAN_FRONTEND="noninteractive"
 STARTTIME=$(date '+%s')
@@ -94,9 +94,7 @@ apt-get install pip python3-requests -y
 pip3 install --upgrade pydispatcher --break-system-packages
 pip3 install --upgrade ruamel.yaml --break-system-packages
 pip3 install --upgrade beautifulsoup4 --break-system-packages
-# note: it seems like fake-useragent is no longer getting updates (repo got archived Jan 2026)
-# hopefully there's something that can be used as a replacement eventually
-pip3 install --upgrade fake-useragent --break-system-packages
+pip3 install --upgrade forge-useragent --break-system-packages
 pip3 install --upgrade RGBMatrixEmulator --break-system-packages
 
 echo -e "\n${GREEN}>>> Installing system services...${NC}"

@@ -1,14 +1,14 @@
 # downloads source gifs from Tenor directly
 # this is designed to be imported as a module, not a script
 # by: WeegeeNumbuh1
-# Valid as of: May 2026
+# Valid as of: July 2026
 
 import requests
 try:
     from fake_useragent import UserAgent
 except ImportError:
     print("This script requires the \'fake_useragent\' module.")
-    print("You can install it using \'pip install fake_useragent\'")
+    print("You can install it using \'pip install forge-useragent\'")
     raise
 try:
     from bs4 import BeautifulSoup as bs
